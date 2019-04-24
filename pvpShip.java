@@ -18,7 +18,7 @@ import ihs.apcs.spacebattle.commands.ShipCommand;
 import ihs.apcs.spacebattle.commands.ThrustCommand;
 import ihs.apcs.spacebattle.commands.ScanCommand;
 public class pvpShip extends BasicSpaceship {
-	
+	boolean debug = true;
 	private Point midpoint;
 	public Point stop1;
 	public Point stop2;
@@ -53,16 +53,18 @@ public class pvpShip extends BasicSpaceship {
 				return new ThrustCommand( 'B', rng(2), 1); 
 			}
 			List<ObjectStatus> ships = results.getByType("Ship");
-			List<ObjectStatus> bullet = results.getByType("Torpedo");
-			if (ships.size() < 1 && bullet.size() < 1){
-				return new ThrustCommand( 'B', rng(2), 1); 
-			} if(bullet.size() > 0 && bullet.get(0).getOrientation() != ship.getOrientation()){
-				return new RaiseShieldsCommand(.1);
-			}
-	
+
 			ObjectStatus target = ships.get(0);
+			if(debug){
+				System.out.println(target + " target");
+				System.out.println(target.getPosition() + "Position of target");
+				System.out.println(target.getOrientation() + " Orientation of the target");
+				System.out.println(target.getSpeed() + " speed of the target");
+			}
+			
 			return new RotateCommand(ship.getPosition().getAngleTo(target.getPosition()) - ship.getOrientation());
 		}else if(state == 2){
+			
 			state = 0;
 			
 			return new FireTorpedoCommand('F');
@@ -70,8 +72,7 @@ public class pvpShip extends BasicSpaceship {
 		return new IdleCommand(10);
 		//return new RotateCommand(ship.getPosition().getAngleTo(this.midpoint) - ship.getOrientation());
 		
-		//johncespinosa@gmail.com
-		
+
 	}
 	//Could be Ship, Planet, BlackHole, Star, Nebula, Asteroid, Torpedo, Bauble, Bubble, or Outpost.
 	public static String randomName(){
