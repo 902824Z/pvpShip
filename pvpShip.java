@@ -90,9 +90,9 @@ public class pvpShip extends BasicSpaceship {
 			Point newPostionOfTar =shoot(target.getPosition(), ship);
 			tar = newPostionOfTar; //this is to check if it is NaN
 			
-			return new RotateCommand(ship.getPosition().getAngleTo(newPostionOfTar) - ship.getOrientation());
+			//return new RotateCommand(ship.getPosition().getAngleTo(newPostionOfTar) - ship.getOrientation());
 			
-			//return new RotateCommand(ship.getPosition().getAngleTo(target.getPosition()) - ship.getOrientation());
+			return new RotateCommand(ship.getPosition().getAngleTo(target.getPosition()) - ship.getOrientation());
 			
 			
 		}else if(state == 2){
@@ -185,7 +185,8 @@ public class pvpShip extends BasicSpaceship {
 		System.out.println(q + " Q");
 		
 		// The time that we will hit the target
-		double t = ((a < 0 ? -1 : 1)*Math.sqrt(q) - b) / (2 * a);
+		//double t = ((a < 0 ? -1 : 1)*Math.sqrt(q) - b) / (2 * a);
+		double t = ((a < 0 ? -1 : 1)*distance(target, ship));
 		//System.out.println(t);
 		// Aim for where the target will be after time t
 		dx += t * target.getX();
@@ -195,9 +196,9 @@ public class pvpShip extends BasicSpaceship {
 		
 		Point hitPoint = new Point(target.getX() + target.getX() * t, target.getY() + target.getY() * t);
 		
-		double bulletX = speedBullet * Math.cos(theta);
-		double bulletY = speedBullet * Math.sin(theta);
-		Point hit = new Point (Math.abs(bulletX), Math.abs(bulletY));
-		return hit;
+		//double bulletX = speedBullet * Math.cos(theta);
+		//double bulletY = speedBullet * Math.sin(theta);
+		//Point hit = new Point (Math.abs(bulletX), Math.abs(bulletY));
+		return hitPoint;
 	}
 }
